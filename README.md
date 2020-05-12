@@ -1,5 +1,5 @@
 # Welcome to the Home of ThymesisFlow
-Thymesisflow is a HW-SW co-designed prototype enabling
+ThymesisFlow is a HW-SW co-designed prototype enabling
 hardware disaggregation of compute resources on POWER9 processor systems.
 The current design supports disaggregation of memory by "stealing" it from a
 neighbour node, and is based on OpenCAPI.
@@ -9,7 +9,7 @@ neighbour node, and is based on OpenCAPI.
 The ThymesisFlow approach consists of a compute node (left side of the figure)
 that is stealing the memory, and a memory node (righ side of the figure) from
 which the memory is stolen. The compute endpoint of the ThymesisFlow design is
-based on the OpenCAPI M1 mode (or LPC), while the memory endpointi uses the
+based on the OpenCAPI M1 mode (or LPC), while the memory endpoint uses the
 OpenCAPI C1 mode.  On the compute endpoint the disaggregated memory is mapped at
 a specific range of addresses in the physical address space and can be
 dynamically hotplugged to a running Linux system. No software modification is
