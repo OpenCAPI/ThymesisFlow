@@ -57,6 +57,6 @@ ThymesisFlow:
   the memory node for access from a remote node.
 - ThymesisStats: Software Library for accessing performance countersi embedded in the design.
 - ThymesisFlow orchestration software: we gave a stub at our vision of a
-  disaggregated systemi, and came up with a proposal control plane for
+  disaggregated system, and came up with a proposal control plane for
   dynamic orchestration of disaggregated memory segments.
 - Stay tuned!
