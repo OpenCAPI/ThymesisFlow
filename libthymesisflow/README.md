@@ -130,9 +130,9 @@ Where:
 
 To keep track of the traffic on the channel, Thymesisflow provides three counters reporting:
 
-* `rx`: number of flits read from the channel
-* `rx`: number of flits transmitted on the channel
-* `latency`: average latency on the channel
+* `rx (flits/sec)`: number of flits read from the channel.
+* `tx (flits/sec)`: number of flits transmitted on the channel.
+* `latency (cycles/sec)`: average latency on the channel.
 
 **Note:** Each counter resets at each read. Therefore, a read each seconds would report the `flits/sec`.
 Given that each flit is 32B, you can compute `rx` and `tx` bandwidth in `B/s` respectively by multiplying `tx*32` and `rx*32`
