@@ -2,7 +2,7 @@
 #include "thymesisflow.h"
 #include <fcntl.h>
 
-int detach(const uint64_t memory_size) {
+int unplug_memory_blocks(const uint64_t memory_size) {
 
     uint64_t probe_addr = INIT_PROBE_ADDR;
 
@@ -83,7 +83,7 @@ int detach_compute(const char *circuit_id) {
 #ifdef MOCK // assume correct detach when we mock the connection
     int res = DETACH_OK;
 #else
-    int res = detach(conn->size);
+    int res = unplug_memory_blocks(conn->size);
 
 #endif
 
@@ -147,7 +147,7 @@ int attach_memory(const char *circuit_id, const char *afu_name,
     return ATTACH_OK;
 }
 
-int probe(uint64_t memory_size) {
+int hotplug_memory_blocks(uint64_t memory_size) {
 
     char file_buff[128];
 
@@ -238,6 +238,6 @@ int attach_compute(const char *circuit_id, const char *afu_name,
     // evaluate if we can decrease this value
     sleep(5);
 
-    return probe(size); // add size to
+    return hotplug_memory_blocks(size); // add size to
 #endif
 }
