@@ -30,6 +30,8 @@
 
 #define MEMORY_PATH "/sys/devices/system/memory"
 
+#define CACHE_ALIGNMENT 128
+
 /**
  *  Setup AFU and allocate memory
  *  Note: ports are passed but not needed in this current hw implementation
