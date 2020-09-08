@@ -69,7 +69,7 @@ For this scenario, recompile agent and CLI as following.
 make
 ```
 
-**Note:** use `DEBUG=1` is required for running unittests successfully
+**Note:** use `DEBUG=1` for debugging information
 
 On both Compute and Memory side you can now run the server process. 
 
