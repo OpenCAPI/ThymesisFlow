@@ -40,13 +40,8 @@ The following steps describe how to setup and run unit tests.
 The first step requires to build unit tests.
 
 ```
-make tests MOCK=1
-```
-
-To start the Thymesisflow agent, run the following command:
-
-```
-./bin/thymesisf-agent
+make MOCK=1
+make MOCK=1 tests
 ```
 
 To launch unit tests, run the following command.

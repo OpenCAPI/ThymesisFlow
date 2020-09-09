@@ -17,6 +17,8 @@
 #include "client.h"
 #include "proto.h"
 #include <assert.h>
+#include <signal.h>
+#include "agent.h"
 
 #define VERIFY(cond)                                                           \
     if (!(cond)) {                                                             \
@@ -126,31 +128,56 @@ void test_integration() {
     char *afu = "/dev/ibm-n0";
     uint64_t size = 68719476736;
 
+    char *sock_path = "/tmp/thymesisflow-test.sock";
+
+    pid_t agent_pid;
+    switch (agent_pid = fork()){
+      case -1:
+        log_error("Error starting agent...\n");
+      case 0:
+        //child
+        log_info("Starting agent...\n");
+        run_agent(sock_path);
+        exit(0);
+    }
+
+    // wait for the agent to start
+    sleep(1);
+
+    log_info("Sending mock requests...\n");
+
     iport_list *plm = NULL;
     plm = add_port(plm, 1);
     // plm = add_port(plm, 3);
     cycle_ports(plm);
 
-    pmessage mresp = send_attach_memory_msg(id, afu, plm, size, SOCK_PATH);
+    pmessage mresp = send_attach_memory_msg(id, afu, plm, size, sock_path);
     VERIFY(mresp.status == ATTACH_OK);
 
-    pmessage mdresp = send_detach_memory_msg(id, SOCK_PATH);
+    pmessage mdresp = send_detach_memory_msg(id, sock_path);
     VERIFY(mdresp.status == DETACH_OK);
 
     pmessage cresp =
-        send_attach_compute_msg(id, afu, plm, size, mresp.ea, SOCK_PATH);
+        send_attach_compute_msg(id, afu, plm, size, mresp.ea, sock_path);
     VERIFY(cresp.status == ATTACH_OK);
 
-    pmessage cdresp = send_detach_compute_msg(id, SOCK_PATH);
+    pmessage cdresp = send_detach_compute_msg(id, sock_path);
     VERIFY(cdresp.status == DETACH_OK);
+
+    //terminate the agent
+    kill(agent_pid,SIGTERM);
 #else
     log_info("this is an API test, build with MOCK=1\n");
 #endif
 }
 
 int main(int argc, char const *argv[]) {
+#ifdef MOCK
     test_hex_string_to_address();
     test_iport_marshalling();
     test_connection();
     test_integration();
+#else
+    log_warn("Unit test are available only with MOCK=1\n");
+#endif
 }
