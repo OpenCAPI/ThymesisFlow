@@ -48,7 +48,7 @@ vivado -source create_project.tcl -tclargs --speed 20.0 --afu thymesisflow --buf
 
 ### Conferences:
 - [OpenPOWER Summit North America 2020 - September 15th 2020](https://openpowerna2020.sched.com/event/eDqy/thymesisflow-a-hardwaresoftware-open-framework-for-software-defined-disaggregation-based-on-opencapi-christian-pinto-ibm-research-europe?iframe=yes&w=100%&sidebar=yes&bg=no)
-- FPL 2020 Tutorial Friday September 4th - A recording of the tutorial will be available soon!
+- [FPL 2020 Tutorial](https://www.youtube.com/watch?v=eWhraT06K2w&feature=emb_logo&ab_channel=FPL2020)
 - [OpenPOWER Summit North America 2019](https://www.youtube.com/watch?v=XcjRL3Lh8Ig)
 - [OpenPOWER Summit Europe 2018](https://www.youtube.com/watch?v=vSKUeGeEkoA)
 
