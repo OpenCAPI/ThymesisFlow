@@ -50,12 +50,13 @@ pmessage send_attach_memory_msg(const char *circuitid, const char *afu,
  * single port supported)
  * @param[in] size: size of memory to be allocated
  * @param[in] ea: effective address to be passed to the AFU during the setup
+ * @param[in] no_hotplug: do not hotploug memory
  * @param[in] sock_path: path to the linux socket
  * @param[out] pmessage unmarshalled response from the server
  */
 pmessage send_attach_compute_msg(const char *circuitid, const char *afu,
                                  const iport_list *ports, const uint64_t size,
-                                 const uint64_t ea, const char *sock_path);
+                                 const uint64_t ea, int no_hotplug, const char *sock_path);
 
 /**
  *  Send detachment request to the memory node daemon through the linux socket
