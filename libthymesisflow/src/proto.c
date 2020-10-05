@@ -439,7 +439,8 @@ char *marshal_attach_memory_request(const char *circuit_id, const char *afu,
 char *marshal_attach_compute_request(const char *circuit_id, const char *afu,
                                      const iport_list *ports,
                                      const uint64_t memsize,
-                                     const uint64_t ea) {
+                                     const uint64_t ea,
+				     int no_hotplug) {
     char *request_msg = (char *)malloc(sizeof(char) * MSG_SIZE);
     if (set_circuitid(request_msg, circuit_id) < 0)
         log_warn("error setting message circuit id\n");

@@ -109,11 +109,12 @@ char *marshal_attach_memory_request(const char *circuitid, const char *afu,
  * @param[in] ports: AFU port to be used
  * @param[in] size: memory allocation size (in bytes)
  * @param[in] ea: effective address used for memory access translation
+ * @param[in] no_hotplug: don't hoplug memory
  * @param[out] msg: array containing the marshalled request
  */
 char *marshal_attach_compute_request(const char *circuitid, const char *afu,
                                      const iport_list *ports,
-                                     const uint64_t memsize, const uint64_t ea);
+                                     const uint64_t memsize, const uint64_t ea, int no_hotplug);
 
 /**
  * Marshal request to tear down a thymesisflow on memory-stealing node

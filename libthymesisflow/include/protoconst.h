@@ -66,6 +66,11 @@ Possible messages:
  */
 #define EA_SIZE sizeof(uint64_t)
 
+/*! \def NO_HOTPLUG_SIZE
+ * \brief size of the no_hotplug flag field
+ */
+#define NO_HOTPLUG_SIZE sizeof(int)
+
 /*! \def ERROR_SIZE
  * \brief maximum size for the error section
  */
@@ -76,7 +81,7 @@ Possible messages:
  */
 #define MSG_SIZE                                                               \
     CIRCUIT_ID_SIZE + MSGTYPE_SIZE + AFUNAME_SIZE + IPORT_SIZE + MEM_SIZE +    \
-        EA_SIZE + ERROR_SIZE
+        EA_SIZE + ERROR_SIZE + NO_HOTPLUG_SIZE
 
 #define CIRCUIT_ID_OFFSET 0
 
