@@ -499,7 +499,7 @@ void unmarshal_response(char *msg, pmessage *rsp) {
     rsp->size = get_size(msg);
     rsp->ea = get_ea(msg);
     rsp->status = get_status(msg);
-    rsp->no_hotplug = get_hotplug(msg);
+    rsp->no_hotplug = get_no_hotplug(msg);
     free(afu_name);
     free(circuit_id);
 }
