@@ -23,9 +23,9 @@
 Possible messages:
 
  - | circuitid | memory    | afu | size |
- - | circuitid | compute   | afu | size | ea |
+ - | circuitid | compute   | afu | size | ea | no_hotplug |
  - | circuitid | mresponse | afu |      | ea | error |
- - | circuitid | cresponse | afu | size |    | error |
+ - | circuitid | cresponse | afu | size |    |            | error |
 
 */
 
@@ -95,7 +95,9 @@ Possible messages:
 
 #define EA_OFFSET MEM_SIZE_OFFSET + MEM_SIZE
 
-#define ERROR_OFFSET EA_OFFSET + EA_SIZE
+#define NO_HOTPLUG_OFFSET EA_OFFSET + EA_SIZE
+
+#define ERROR_OFFSET NO_HOTPLUG_OFFSET + NO_HOTPLUG_SIZE
 
 #define MEMORY_ATTACH "memory_attach"
 

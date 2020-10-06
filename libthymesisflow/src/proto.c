@@ -202,6 +202,22 @@ int set_ea(char *msg, uint64_t ea) {
     return 0;
 }
 
+int set_no_hotplug(char *msg, int no_hotplug) {
+    if (msg == NULL)
+        return ERR_MSGNULL;
+    if (no_hotplug > 1 || no_hotplug < 0)
+        return ERR_INT_PARAM;
+
+    memcpy(msg + NO_HOTPLUG_OFFSET, &no_hotplug, NO_HOTPLUG_SIZE);
+    return 0;
+}
+
+int get_no_hotplug(const char *msg) {
+    int no_hotplug = 0;
+    memcpy(&no_hotplug, msg + NO_HOTPLUG_OFFSET, NO_HOTPLUG_SIZE);
+    return no_hotplug;
+}
+
 void set_status(char *msg, int status) {
 
     log_info("setting status: %d\n", status);
@@ -311,12 +327,15 @@ char *proto_attach_compute(const char *msg) {
 
     uint64_t ea = get_ea(msg);
 
+    int no_hotplug = get_no_hotplug(msg);
+
     // uint64_t memsize = get_size(msg);
 
     log_info("requested compute mode - size %lu - effective address: %lu \n",
              size, ea);
 
-    int err = attach_compute(circuit_id, afu_name, ports, ea, size);
+    int err = attach_compute(circuit_id, afu_name, ports, ea, size, no_hotplug);
+
     // error check
     char *response_msg = (char *)malloc(sizeof(char) * MSG_SIZE);
 
@@ -451,6 +470,7 @@ char *marshal_attach_compute_request(const char *circuit_id, const char *afu,
     set_iports(request_msg, ports);
     set_size(request_msg, memsize);
     set_ea(request_msg, ea);
+    set_no_hotplug(request_msg, no_hotplug);
     return request_msg;
 }
 
@@ -481,6 +501,7 @@ void unmarshal_response(char *msg, pmessage *rsp) {
     rsp->size = get_size(msg);
     rsp->ea = get_ea(msg);
     rsp->status = get_status(msg);
+    rsp->no_hotplug = get_hotplug(msg);
     free(afu_name);
     free(circuit_id);
 }
