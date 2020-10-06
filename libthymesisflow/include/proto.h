@@ -34,6 +34,7 @@ typedef struct proto_response {
     int status;
     uint64_t size;
     uint64_t ea;
+    int no_hotplug;
 } pmessage;
 
 /**

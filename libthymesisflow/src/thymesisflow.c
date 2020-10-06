@@ -225,7 +225,7 @@ int hotplug_memory_blocks(uint64_t memory_size) {
 
 int attach_compute(const char *circuit_id, const char *afu_name,
                    iport_list *ports, const uint64_t effective_addr,
-                   const uint64_t size) {
+                   const uint64_t size, int no_hotplug) {
 
     if (ports == NULL) {
         log_error_ext("ports cannot be null\n");
@@ -240,6 +240,8 @@ int attach_compute(const char *circuit_id, const char *afu_name,
     add_conn(conn);
 #ifdef MOCK
     log_info_ext("mocking memory attachment on compute side\n");
+    if (no_hotplug)
+        log_info_ext("Request with no_hotplug flag set")
     return ATTACH_OK;
 #else
 
@@ -253,6 +255,11 @@ int attach_compute(const char *circuit_id, const char *afu_name,
     // Allow the AURORA channel to finish the setup step
     // evaluate if we can decrease this value
     sleep(5);
+
+    if (no_hotplug){
+        log_debug_ext("No need to hoplug this memory chunk");
+        return ATTACH_OK;
+    }
 
     return hotplug_memory_blocks(size); // add size to
 #endif
