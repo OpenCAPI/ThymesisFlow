@@ -81,8 +81,8 @@ pmessage send_attach_compute_msg(const char *circuitid, const char *afu,
 
     pmessage rsp = send_cmd(msg, sock_path);
 
-    log_debug("circuitid: %s - type: %s - afu %s - size %lu  - status: %d - no_hotplug: %d\n",
-              rsp.circuitid, rsp.msgtype, rsp.afu, rsp.size, rsp.status, rsp.no_hotplug);
+    log_debug("circuitid: %s - type: %s - afu %s - size %lu  - status: %d\n",
+              rsp.circuitid, rsp.msgtype, rsp.afu, rsp.size, rsp.status);
 
     free(msg);
     return rsp;
