@@ -200,7 +200,7 @@ int main(int argc, char **argv) {
     uint64_t ea = 0;
     char *sock_path = NULL;
     iport_list *pl = NULL;
-    static int no_hotplug;
+    static int no_hotplug = 0;
 
     static struct option long_options[] = {
         {"size", required_argument, 0, 's'},
