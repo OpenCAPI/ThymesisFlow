@@ -131,6 +131,7 @@ void test_integration() {
     char *id = "cc592edc-eca6-4e0f-9541-5a3684c37757";
     char *afu = "/dev/ibm-n0";
     uint64_t size = 68719476736;
+    int no_hotplug = 1;
 
     char *sock_path = "/tmp/thymesisflow-test.sock";
 
@@ -162,7 +163,7 @@ void test_integration() {
     VERIFY(mdresp.status == DETACH_OK);
 
     pmessage cresp =
-        send_attach_compute_msg(id, afu, plm, size, mresp.ea, sock_path);
+        send_attach_compute_msg(id, afu, plm, size, mresp.ea, no_hotplug, sock_path);
     VERIFY(cresp.status == ATTACH_OK);
 
     pmessage cdresp = send_detach_compute_msg(id, sock_path);
