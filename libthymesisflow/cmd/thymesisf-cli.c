@@ -76,6 +76,8 @@ void helper_compute_attach() {
     fprintf(stderr,
             "    --ea EFFECTIVE_ADDRESS\n\t\t effective address printed "
             "by the lender\n");
+    fprintf(stderr, "    --no-hotplug\n\t\t attach memory without hotplugging to Linux\n");
+
 }
 
 int handle_compute_attach(const char *cid, const char *afu,

@@ -74,6 +74,10 @@ cmds: $(CMD_BIN)
 
 .PHONY: all clean clean_tests cmds tests docs
 
+cscope:
+	rm cscope.*
+	find ./* -type f \( -name \*.c -o -name \*.h \) > ./cscope.files
+	cscope -b -q -k
 
 clean:
 	rm -rf $(OUT_DIRS)

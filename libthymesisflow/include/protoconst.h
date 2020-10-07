@@ -22,10 +22,10 @@
 
 Possible messages:
 
- - | circuitid | memory    | afu | size |
- - | circuitid | compute   | afu | size | ea | no_hotplug |
- - | circuitid | mresponse | afu |      | ea | error |
- - | circuitid | cresponse | afu | size |    |            | error |
+ - | circuitid | memory    | afu | port | size |
+ - | circuitid | compute   | afu | port | size | ea | no_hotplug |
+ - | circuitid | mresponse | afu |      |      | ea |            | error |
+ - | circuitid | cresponse | afu |      | size |    |            | error |
 
 */
 
