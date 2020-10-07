@@ -88,7 +88,7 @@ int del_conn(const char *circuit_id) {
     // we assume no replication of connections so
     // the circuit matching is the only one deleted
     while (runner != NULL) {
-        if (strcmp(runner->circuit_id, circuit_id) == 0) {
+        if (strncmp(runner->circuit_id, circuit_id, CIRCUIT_ID_SIZE) == 0) {
 
             if (runner == clist) { // case the head is a match
                 clist = runner->next;
