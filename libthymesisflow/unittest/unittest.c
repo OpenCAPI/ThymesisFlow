@@ -81,6 +81,7 @@ void test_iport_marshalling() {
     pl = add_port(pl, 5);
     rep = marshal_iports(pl);
     VERIFY(rep == 17); // hex(11) == 17 == 2^4 + 2^0
+    free_iport_list(pl);
 }
 
 void test_iport() {
@@ -104,6 +105,7 @@ void test_iport() {
     log_info("test - %d ...\n", port);
     pl = unmarshal_iports(port);
     cycle_ports(pl);
+    free_iport_list(pl);
 
     ptest = marshal_iports(pl);
     log_info("test - serialization %d == %d ...\n", ptest, port);
@@ -114,11 +116,13 @@ void test_iport() {
     log_info("test - %d ...\n", port);
     pl = unmarshal_iports(port);
     cycle_ports(pl);
+    free_iport_list(pl);
 
     port = 16; // expect port 5
     log_info("test - %d ...\n", port);
     pl = unmarshal_iports(port);
     cycle_ports(pl);
+    free_iport_list(pl);
 }
 
 void test_integration() {
@@ -163,6 +167,7 @@ void test_integration() {
 
     pmessage cdresp = send_detach_compute_msg(id, sock_path);
     VERIFY(cdresp.status == DETACH_OK);
+    free_iport_list(plm);
 
     //terminate the agent
     kill(agent_pid,SIGTERM);

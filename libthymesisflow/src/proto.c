@@ -266,7 +266,6 @@ char *proto_attach_memory(const char *msg) {
 
     int res =
         attach_memory(circuit_id, afu_name, ports, size, &effective_address);
-    free_iport_list(ports);
 
     // CHECK ERROR
 
@@ -286,6 +285,7 @@ char *proto_attach_memory(const char *msg) {
     set_ea(response_msg, effective_address);
     set_status(response_msg, res);
 
+    free_iport_list(ports);
     free(circuit_id);
     free(afu_name);
     return response_msg;
@@ -317,7 +317,6 @@ char *proto_attach_compute(const char *msg) {
              size, ea);
 
     int err = attach_compute(circuit_id, afu_name, ports, ea, size);
-    free_iport_list(ports);
     // error check
     char *response_msg = (char *)malloc(sizeof(char) * MSG_SIZE);
 
@@ -331,6 +330,7 @@ char *proto_attach_compute(const char *msg) {
     set_afu(response_msg, afu_name);
     set_iports(response_msg, ports);
     set_status(response_msg, err);
+    free_iport_list(ports);
 
     free(circuit_id);
     free(afu_name);
@@ -476,6 +476,7 @@ void unmarshal_response(char *msg, pmessage *rsp) {
     strncpy(rsp->msgtype, msgtype, MSGTYPE_SIZE + 1);
     // log_info("msgtype: %s\n", rsp->circuitid);
 
+    free(msgtype);
     rsp->size = get_size(msg);
     rsp->ea = get_ea(msg);
     rsp->status = get_status(msg);
@@ -502,6 +503,8 @@ int read_pmessage(int fd, pmessage *resp) {
         return -1;
     }
     unmarshal_response(resp_msg, resp);
+
+    free(resp_msg);
 
     return 0;
 }
