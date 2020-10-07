@@ -76,7 +76,7 @@ void helper_compute_attach() {
     fprintf(stderr,
             "    --ea EFFECTIVE_ADDRESS\n\t\t effective address printed "
             "by the lender\n");
-    fprintf(stderr, "    --no_hotplug\n\t\t attach memory without hotplugging to Linux\n");
+    fprintf(stderr, "    --no-hotplug\n\t\t attach memory without hotplugging to Linux\n");
 
 }
 
@@ -200,7 +200,7 @@ int main(int argc, char **argv) {
     uint64_t ea = 0;
     char *sock_path = NULL;
     iport_list *pl = NULL;
-    static int no_hotplug;
+    static int no_hotplug = 0;
 
     static struct option long_options[] = {
         {"size", required_argument, 0, 's'},
