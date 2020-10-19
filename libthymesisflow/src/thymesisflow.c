@@ -240,8 +240,10 @@ int attach_compute(const char *circuit_id, const char *afu_name,
     add_conn(conn);
 #ifdef MOCK
     log_info_ext("mocking memory attachment on compute side\n");
-    if (no_hotplug)
-        log_info_ext("Request with no_hotplug flag set");
+    if (no_hotplug == 1)
+        log_info_ext("Request with no_hotplug flag set\n");
+    else if (no_hotplug == 0)
+	log_info_ext("Request without no_hotplug flag set\n");
     return ATTACH_OK;
 #else
 
