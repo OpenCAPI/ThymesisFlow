@@ -65,6 +65,7 @@ struct connection_s {
     uint64_t size;
     unsigned char *ea;
     struct connection_s *next;
+    int no_hotplug;
 
 #ifndef MOCK
     ocxl_afu_h afu;
