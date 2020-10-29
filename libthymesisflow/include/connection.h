@@ -122,10 +122,11 @@ int free_conn(connection *conn);
  * @param[in] circuit_id: circuit identifier
  * @param[in] afu_name: AFU to be used
  * @param[in] size: disaggregated memory size
+ * @param[in] no_hotplug: no_hotplug flag value
  * @param[out] connection: connection to be freed
  */
 connection *new_conn(const char *circuit_id, const char *afu_name,
-                     const uint64_t size);
+                     const uint64_t size, int no_hotplug);
 
 int setup_afu_compute(connection *conn, uint64_t effective_addr,
                       iport_list *ports);

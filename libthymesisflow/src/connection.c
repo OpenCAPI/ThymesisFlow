@@ -27,15 +27,14 @@ uint64_t calculate_seg_offset(const uint64_t ea_base, const uint64_t seg_offset,
 }
 
 connection *new_conn(const char *circuit_id, const char *afu_name,
-                     const uint64_t size, ...) {
+                     const uint64_t size, int no_hotplug) {
     connection *conn = (connection *)malloc(sizeof(connection));
     memcpy(conn->circuit_id, circuit_id, CIRCUIT_ID_SIZE);
     strncpy(conn->afu_name, afu_name, AFUNAME_SIZE);
     conn->size = size;
     conn->next = NULL;
 
-    // check if no_hotplug was set, 
-    connt-> no_hotplug = no_hotplug;
+    conn->no_hotplug = no_hotplug;
 #ifndef MOCK
     conn->stat_tid = NULL;
 #endif
