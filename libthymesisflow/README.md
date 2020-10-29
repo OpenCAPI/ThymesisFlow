@@ -111,7 +111,8 @@ sudo ./bin/thymesisf-cli attach-compute \
     --afu <AFU_NAME> \
     --cid <CIRCUIT_ID> \
     --size <MEMORY_SIZE> \
-    --ea <EFFECTIVE_ADDRESS>
+    --ea <EFFECTIVE_ADDRESS> \
+    [--no-hotplug]
 ```
 
 Where:
@@ -120,6 +121,7 @@ Where:
 * `CIRCUIT_ID` is an alphanumeric string representing your connection
 * `MEMORY_SIZE` represents the amount of memory (in bytes) to be reserved. This needs to be a multiple of 256 MB
 * `EFFECTIVE_ADDRESS` address returned as `EA` during the [memory side setup](# Setup Memory side)
+* `--no-hotplug` attaches the memory without actual hotplug to the running Linux kenrel
 
 #### Stats counters
 
