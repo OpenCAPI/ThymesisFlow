@@ -43,16 +43,16 @@ void test_hex_string_to_address() {
 }
 
 void test_connection() {
-    connection *conn1 = new_conn("a", "afu1", 10);
+    connection *conn1 = new_conn("a", "afu1", 10, 0);
     add_conn(conn1);
     VERIFY(conn1->size == 10 && strcmp(conn1->circuit_id, "a") == 0 &&
            strcmp(conn1->afu_name, "afu1") == 0 && conn1->next == NULL);
 
-    connection *conn2 = new_conn("b", "afu2", 10);
+    connection *conn2 = new_conn("b", "afu2", 10, 0);
     add_conn(conn2);
     VERIFY(clist == conn2 && clist->next == conn1);
 
-    connection *conn3 = new_conn("c", "afu3", 10);
+    connection *conn3 = new_conn("c", "afu3", 10, 0);
     add_conn(conn3);
     VERIFY(clist == conn3 && clist->next == conn2);
 
@@ -131,6 +131,7 @@ void test_integration() {
     char *id = "cc592edc-eca6-4e0f-9541-5a3684c37757";
     char *afu = "/dev/ibm-n0";
     uint64_t size = 68719476736;
+    int no_hotplug = 1;
 
     char *sock_path = "/tmp/thymesisflow-test.sock";
 
@@ -161,12 +162,23 @@ void test_integration() {
     pmessage mdresp = send_detach_memory_msg(id, sock_path);
     VERIFY(mdresp.status == DETACH_OK);
 
+    // testing attach_compute with no_hotplug=1
     pmessage cresp =
-        send_attach_compute_msg(id, afu, plm, size, mresp.ea, sock_path);
+        send_attach_compute_msg(id, afu, plm, size, mresp.ea, no_hotplug, sock_path);
     VERIFY(cresp.status == ATTACH_OK);
 
     pmessage cdresp = send_detach_compute_msg(id, sock_path);
     VERIFY(cdresp.status == DETACH_OK);
+
+    // testing attach_compute with no_hotplug=0
+    no_hotplug = 0;
+    cresp =
+        send_attach_compute_msg(id, afu, plm, size, mresp.ea, no_hotplug, sock_path);
+    VERIFY(cresp.status == ATTACH_OK);
+
+    cdresp = send_detach_compute_msg(id, sock_path);
+    VERIFY(cdresp.status == DETACH_OK);
+
     free_iport_list(plm);
 
     //terminate the agent
