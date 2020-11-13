@@ -75,9 +75,9 @@ pmessage send_attach_memory_msg(const char *circuitid, const char *afu,
 
 pmessage send_attach_compute_msg(const char *circuitid, const char *afu,
                                  const iport_list *ports, const uint64_t size,
-                                 const uint64_t ea, const char *sock_path) {
+                                 const uint64_t ea, int no_hotplug, const char *sock_path) {
 
-    char *msg = marshal_attach_compute_request(circuitid, afu, ports, size, ea);
+    char *msg = marshal_attach_compute_request(circuitid, afu, ports, size, ea, no_hotplug);
 
     pmessage rsp = send_cmd(msg, sock_path);
 

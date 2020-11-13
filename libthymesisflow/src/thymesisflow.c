@@ -89,6 +89,7 @@ int detach_memory(const char *circuit_id) {
 
 int detach_compute(const char *circuit_id) {
     connection *conn = get_conn(circuit_id);
+    int res = DETACH_OK;
     if (conn == NULL) {
         log_error_ext("error fetching circuit: %s", circuit_id);
         return ERR_MISSING_CID;
@@ -96,11 +97,14 @@ int detach_compute(const char *circuit_id) {
     log_info_ext("compute detach - circuit: %s\n", circuit_id);
     // Check return value in detach
 
-#ifdef MOCK // assume correct detach when we mock the connection
-    int res = DETACH_OK;
+#ifdef MOCK
+    if (!conn->no_hotplug)
+        log_debug_ext("This connection requires hot-unplug of the memory\n");
+    else
+        log_debug_ext("This connection does not require hot-unplug of the memory\n");
 #else
-    int res = unplug_memory_blocks(conn->size);
-
+    if (!conn->no_hotplug)
+        res = unplug_memory_blocks(conn->size);
 #endif
 
     int res_del_code;
@@ -110,6 +114,9 @@ int detach_compute(const char *circuit_id) {
             "thymesisflow - error registering detachment for circuit %s "
             "- error: %d\n",
             circuit_id, res_del_code);
+        //We should probably notifier the caller that something went wrong with
+        //registering the detachment
+        res = ERR_REGISTER_DETACH;
     }
 
     return res;
@@ -118,7 +125,7 @@ int detach_compute(const char *circuit_id) {
 int attach_memory(const char *circuit_id, const char *afu_name,
                   iport_list *ports, const uint64_t size, uint64_t *eaptr) {
 
-    connection *conn = new_conn(circuit_id, afu_name, size);
+    connection *conn = new_conn(circuit_id, afu_name, size, 0);
 
     add_conn(conn);
 
@@ -225,7 +232,7 @@ int hotplug_memory_blocks(uint64_t memory_size) {
 
 int attach_compute(const char *circuit_id, const char *afu_name,
                    iport_list *ports, const uint64_t effective_addr,
-                   const uint64_t size) {
+                   const uint64_t size, int no_hotplug) {
 
     if (ports == NULL) {
         log_error_ext("ports cannot be null\n");
@@ -235,11 +242,15 @@ int attach_compute(const char *circuit_id, const char *afu_name,
         return ERR_PORT_UNSUPPORTED;
     }
 
-    connection *conn = new_conn(circuit_id, afu_name, size);
+    connection *conn = new_conn(circuit_id, afu_name, size, no_hotplug);
 
     add_conn(conn);
 #ifdef MOCK
     log_info_ext("mocking memory attachment on compute side\n");
+    if (no_hotplug == 1)
+        log_info_ext("Request with no_hotplug flag set\n");
+    else if (no_hotplug == 0)
+	log_info_ext("Request without no_hotplug flag set\n");
     return ATTACH_OK;
 #else
 
@@ -253,6 +264,11 @@ int attach_compute(const char *circuit_id, const char *afu_name,
     // Allow the AURORA channel to finish the setup step
     // evaluate if we can decrease this value
     sleep(5);
+
+    if (no_hotplug){
+        log_debug_ext("No need to hoplug this memory chunk");
+        return ATTACH_OK;
+    }
 
     return hotplug_memory_blocks(size); // add size to
 #endif
