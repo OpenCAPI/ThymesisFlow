@@ -30,6 +30,7 @@ CMD_BIN:= $(addprefix $(BINDIR)/,$(notdir $(CMD_SRCS:.c=)))
 
 VPATH= src cmd unittest
 
+GIT_VERSION=`git rev-parse --abbrev-ref HEAD`
 
 ifeq ($(DEBUG),1)
 	CCFLAGS+= -g -O0
@@ -70,6 +71,9 @@ $(BINDIR)/%: $(ODIR)/%.o
 	$(CC) $(CCFLAGS) -o $@ $^ -L$(LIB_DIR) -lthymesisflow $(LDFLAGS)
 
 cmds: $(CMD_BIN) 
+
+docker:
+	docker build --network=host -t thymesisflow:$(GIT_VERSION) .
 
 
 .PHONY: all clean clean_tests cmds tests docs
