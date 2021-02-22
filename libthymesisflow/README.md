@@ -159,6 +159,17 @@ sudo ./bin/thymesisf-cli detach-compute --cid <CIRCUIT_ID>
 sudo ./bin/thymesisf-cli detach-compute --cid <CIRCUIT_ID>
 ```
 
+#### Run agent in a Docker container
+
+```
+make docker
+docker run -it --privileged \
+	--mount type=bind,source=/dev/ocxl,target=/dev/ocxl \
+	--mount type=bind,source=/tmp,target=/tmp \
+	thymesisflow:$(git rev-parse --abbrev-ref HEAD)
+
+```
+
 
 ### Find your AFU
 
