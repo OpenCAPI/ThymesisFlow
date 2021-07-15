@@ -31,7 +31,7 @@ The ThymesisFlow design currently supports the following cards:
 ## How-to bring-up the design
 The ThymesisFlow build and bring-up procedure is described in detail in the [design reference manual](./reference_design_doc/ThymesisFlow%20Design%20and%20Deployment%20v1.1.pdf).
 Please, refer also to the [OpenCAPI3.0
-Wiki](https://github.com/OpenCAPI/OpenCAiPI3.0_Client_RefDesign/wiki) for further details on the Vivado projects creation.
+Wiki](https://github.com/OpenCAPI/OpenCAPI3.0_Client_RefDesign/wiki) for further details on the Vivado projects creation.
 
 ### Create Compute side Vivado project
 ```console
