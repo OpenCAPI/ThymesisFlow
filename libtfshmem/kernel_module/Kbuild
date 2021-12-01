@@ -1,0 +1,2 @@
+obj-m  := tfshmem.o
+tfshmem-y := tfshmem_mod.o tfshmem_ops.o
